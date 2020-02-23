@@ -1,5 +1,7 @@
+const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
+const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 
 module.exports = {
@@ -28,15 +30,27 @@ module.exports = {
       {
         test: /\.s[ac]ss$/i,
         use: [
-          'style-loader',
-          'css-loader',
-          'sass-loader',
+          {
+            loader: MiniCssExtractPlugin.loader,
+          },
+          {
+            loader: 'css-loader',
+          },
+          {
+            loader: 'sass-loader',
+          },
+        ],
+        include: [
+          path.join(__dirname, './src/styles'),
+          path.join(__dirname, './src/style.scss'),
         ],
       },
     ],
   },
   plugins: [
-    new CleanWebpackPlugin(),
+    new CleanWebpackPlugin({
+      verbose: true,
+    }),
     new HtmlWebpackPlugin({
       template: './src/index.html',
     }),
@@ -44,6 +58,10 @@ module.exports = {
       { from: './src/assets', to: 'assets' },
       { from: './src/favicon.png', to: 'favicon.png' },
     ]),
+    new MiniCssExtractPlugin({
+      filename: '[name].[hash].css',
+      chunkFilename: '[id].[hash].css',
+    }),
   ],
   resolve: {
     extensions: [ '.tsx', '.ts', '.js' ],

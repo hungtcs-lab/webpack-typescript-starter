@@ -8,5 +8,5 @@ module.exports = merge(common, {
     path: path.resolve(__dirname, 'dist'),
     filename: '[name].js',
   },
-  devtool: 'eval-source-map'
+  devtool: 'source-map'
 });
