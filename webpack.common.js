@@ -16,9 +16,22 @@ module.exports = {
         test: /\.ts$/,
         use: [
           {
+            loader: 'eslint-loader',
+          },
+        ],
+        enforce: 'pre',
+        include: [
+          path.join(__dirname, './src'),
+        ],
+        exclude: /node_modules/,
+      },
+      {
+        test: /\.ts$/,
+        use: [
+          {
             loader: 'babel-loader',
             options: {
-              presets: ['@babel/preset-env']
+              presets: ['@babel/preset-env'],
             },
           },
           {
@@ -64,6 +77,6 @@ module.exports = {
     }),
   ],
   resolve: {
-    extensions: [ '.tsx', '.ts', '.js' ],
+    extensions: ['.tsx', '.ts', '.js'],
   },
 };

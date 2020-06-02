@@ -18,7 +18,7 @@ module.exports = merge(common, {
             // const allChunksNames = chunks.map((item) => item.name).join('~');
             return `${ cacheGroupKey }-${ moduleFileName }`;
           },
-          chunks: 'all'
+          chunks: 'all',
         },
       },
     },

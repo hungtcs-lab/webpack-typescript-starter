@@ -1,7 +1,7 @@
 
 export class Application {
 
-  public hello() {
+  public hello(): void {
     console.log(
       `%chello %cworld %c!`,
       'color: red; background: lightblue; padding: 0.5rem; font-size: 14px; font-weight: bold;',
