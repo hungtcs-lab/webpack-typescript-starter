@@ -10,6 +10,7 @@ module.exports = merge(common, {
   },
   devtool: 'source-map',
   devServer: {
+    hot: true,
     // proxy: {
     //   context: ['/api'],
     //   target: 'http://127.0.0.1:3000'
