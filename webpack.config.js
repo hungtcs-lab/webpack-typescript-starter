@@ -10,6 +10,10 @@ module.exports = {
     style: './src/style.scss',
     polyfills: './src/polyfills.ts',
   },
+  output: {
+    path: path.resolve(__dirname, 'dist'),
+    filename: '[name].js',
+  },
   module: {
     rules: [
       {
@@ -22,23 +26,18 @@ module.exports = {
         enforce: 'pre',
         include: [
           path.join(__dirname, './src'),
-        ],
-        exclude: /node_modules/,
+        ]
       },
       {
         test: /\.ts$/,
         use: [
           {
-            loader: 'babel-loader',
-            options: {
-              presets: ['@babel/preset-env'],
-            },
-          },
-          {
             loader: 'ts-loader',
           },
         ],
-        exclude: /node_modules/,
+        include: [
+          path.join(__dirname, './src'),
+        ]
       },
       {
         test: /\.s[ac]ss$/i,
@@ -66,17 +65,21 @@ module.exports = {
     }),
     new HtmlWebpackPlugin({
       template: './src/index.html',
+      chunks: ['polyfills', 'style', 'main'],
+      chunksSortMode: 'manual',
     }),
-    new CopyWebpackPlugin([
-      { from: './src/assets', to: 'assets' },
-      { from: './src/favicon.png', to: 'favicon.png' },
-    ]),
+    new CopyWebpackPlugin({
+      patterns: [
+        { from: './src/assets', to: 'assets' },
+        { from: './src/favicon.png', to: 'favicon.png' },
+      ],
+    }),
     new MiniCssExtractPlugin({
-      filename: '[name].[hash].css',
-      chunkFilename: '[id].[hash].css',
+      filename: '[name].css'
     }),
   ],
   resolve: {
-    extensions: ['.tsx', '.ts', '.js'],
+    extensions: ['.ts', '.js'],
   },
+  externals: [],
 };
