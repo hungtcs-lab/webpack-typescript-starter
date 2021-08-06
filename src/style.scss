@@ -1,8 +1,14 @@
 
-html, body {
-  width: 100vw;
-  margin: 0;
+html {
   height: 100vh;
-  padding: 0;
-  overflow: hidden;
+}
+
+body {
+  margin: 0px;
+  min-height: 100%;
+  > main {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
 }

@@ -1,18 +1,22 @@
-const path = require('path');
-const HtmlWebpackPlugin = require('html-webpack-plugin');
-const CopyWebpackPlugin = require('copy-webpack-plugin');
-const MiniCssExtractPlugin = require('mini-css-extract-plugin');
-const { CleanWebpackPlugin } = require('clean-webpack-plugin');
+import path from 'path';
+import webpack from 'webpack';
+import HtmlWebpackPlugin from 'html-webpack-plugin';
+import CopyWebpackPlugin from 'copy-webpack-plugin';
+import MiniCssExtractPlugin from 'mini-css-extract-plugin';
+import { Configuration } from 'webpack-dev-server';
+import { CleanWebpackPlugin } from 'clean-webpack-plugin';
 
-module.exports = {
+const production = process.env.NODE_ENV === 'production';
+
+const config: webpack.Configuration & { devServer?: Configuration } = {
+  mode: production ? 'production' : 'development',
   entry: {
     main: './src/main.ts',
-    style: './src/style.scss',
     polyfills: './src/polyfills.ts',
   },
   output: {
     path: path.resolve(__dirname, 'dist'),
-    filename: '[name].js',
+    filename: production ? '[name].[contenthash].js' : '[name].js',
   },
   module: {
     rules: [
@@ -20,19 +24,10 @@ module.exports = {
         test: /\.ts$/,
         use: [
           {
-            loader: 'eslint-loader',
-          },
-        ],
-        enforce: 'pre',
-        include: [
-          path.join(__dirname, './src'),
-        ]
-      },
-      {
-        test: /\.ts$/,
-        use: [
-          {
             loader: 'ts-loader',
+            options: {
+              configFile: production ? 'tsconfig.prod.json' : 'tsconfig.json',
+            },
           },
         ],
         include: [
@@ -65,7 +60,7 @@ module.exports = {
     }),
     new HtmlWebpackPlugin({
       template: './src/index.html',
-      chunks: ['polyfills', 'style', 'main'],
+      chunks: ['polyfills', 'main'],
       chunksSortMode: 'manual',
     }),
     new CopyWebpackPlugin({
@@ -75,11 +70,22 @@ module.exports = {
       ],
     }),
     new MiniCssExtractPlugin({
-      filename: '[name].css'
+      filename: production ? '[name].[contenthash].css' : '[name].css'
     }),
   ],
   resolve: {
     extensions: ['.ts', '.js'],
   },
+  devtool: production ? false : 'source-map',
   externals: [],
+  devServer: {
+    hot: true,
+    contentBase: './dist/',
+    clientLogLevel: 'warning',
+  },
+  optimization: {
+    runtimeChunk: 'single',
+  },
 };
+
+export default config;

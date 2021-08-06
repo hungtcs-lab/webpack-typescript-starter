@@ -1,30 +1,41 @@
 {
   "name": "webpack-typescript-starter",
+  "description": "starter for webpack with typescript",
   "version": "0.0.1",
   "license": "MIT",
   "scripts": {
-    "start": "webpack serve --config=webpack.config.js --devtool=source-map --mode=development --port=3100",
-    "build": "webpack --config=webpack.config.js --devtool=source-map --mode=development",
-    "build:prod": "webpack --config=webpack.config.js --mode=production"
+    "start": "TS_NODE_PROJECT=tsconfig.webpack.json webpack serve --config=webpack.config.ts --port=3100",
+    "build:dev": "TS_NODE_PROJECT=tsconfig.webpack.json webpack --config=webpack.config.ts",
+    "build": "TS_NODE_PROJECT=tsconfig.webpack.json NODE_ENV=production webpack --config=webpack.config.ts"
   },
   "devDependencies": {
-    "@types/node": "^14.14.8",
-    "@typescript-eslint/eslint-plugin": "^4.8.1",
-    "@typescript-eslint/parser": "^4.8.1",
-    "clean-webpack-plugin": "^3.0.0",
-    "copy-webpack-plugin": "^6.3.1",
-    "css-loader": "^5.0.1",
-    "eslint": "^7.13.0",
-    "eslint-loader": "^4.0.2",
-    "html-webpack-plugin": "^5.0.0-alpha.14",
-    "mini-css-extract-plugin": "^1.3.0",
-    "sass": "^1.29.0",
-    "sass-loader": "^10.1.0",
-    "ts-loader": "^8.0.11",
-    "typescript": "^4.0.5",
-    "webpack": "^5.4.0",
-    "webpack-cli": "^4.2.0",
-    "webpack-dev-server": "^3.11.0"
+    "@types/copy-webpack-plugin": "^8.0.1",
+    "@types/mini-css-extract-plugin": "^2.0.1",
+    "@types/node": "^16.4.13",
+    "@types/webpack": "^5.28.0",
+    "@types/webpack-dev-server": "^3.11.5",
+    "clean-webpack-plugin": "^4.0.0-alpha.0",
+    "copy-webpack-plugin": "^9.0.1",
+    "css-loader": "^6.2.0",
+    "html-webpack-plugin": "^5.3.2",
+    "mini-css-extract-plugin": "^2.2.0",
+    "sass": "^1.37.5",
+    "sass-loader": "^12.1.0",
+    "ts-loader": "^9.2.5",
+    "ts-node": "^10.1.0",
+    "tsconfig-paths": "^3.10.1",
+    "typescript": "^4.3.5",
+    "webpack": "^5.48.0",
+    "webpack-cli": "^4.7.2",
+    "webpack-dev-server": "^3.11.2"
   },
-  "dependencies": {}
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/hungtcs-lab/webpack-typescript-starter.git"
+  },
+  "author": "鸿则 <hungtcs@outlook.com> (https://github.com/hungtcs-lab)",
+  "bugs": {
+    "url": "https://github.com/hungtcs-lab/webpack-typescript-starter/issues"
+  },
+  "homepage": "https://github.com/hungtcs-lab/webpack-typescript-starter#readme"
 }
