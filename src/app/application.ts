@@ -1,7 +1,12 @@
+import { production } from '@environments';
 
 export class Application {
 
   constructor(container: HTMLElement) {
+    if (!production) {
+      console.warn('Application is running in development mode');
+    }
+
     const element = document.createElement('main');
     element.innerHTML = `
       <h2>Webpack Typescript Starter!</h2>
@@ -10,13 +15,9 @@ export class Application {
     container.appendChild(element);
   }
 
-  public hello(): void {
-    console.log(
-      `%chello %cworld %c!`,
-      'color: red; background: lightblue; padding: 0.5rem; font-size: 14px; font-weight: bold;',
-      'color: lightblue; background: red; padding: 0.5rem; font-size: 14px; font-weight: bold;',
-      'color: white; background: darkgreen; padding: 0.5rem; font-size: 14px; font-weight: bold;',
-    );
+  public async hello() {
+    const { hello } = await import('./hello');
+    hello();
   }
 
 }

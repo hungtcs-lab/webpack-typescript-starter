@@ -1,4 +1,6 @@
+.husky/_/
+
+coverage/
+
 node_modules/
 dist/
-
-.vscode/
